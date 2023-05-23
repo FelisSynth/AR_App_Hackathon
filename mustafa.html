@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>AR.js A-Frame Location-basedd</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+<script type='text/javascript' src='https://raw.githack.com/AR-js-org/AR.js/master/three.js/build/ar-threex-location-only.js'></script>
+<script type='text/javascript' src='https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js'></script>
+<script>
+    window.addEventListener("load",function() {
+    setTimeout(function(){
+        // This hides the address bar:
+        window.scrollTo(0, 1);
+    }, 0);
+});
+
+AFRAME.registerComponent('clickhandler', {
+
+    init: function() {
+        const el = this.el;
+
+        el.addEventListener('click', function() {
+            const scale = el.getAttribute('scale');
+            Object.keys(scale).forEach((key) => scale[key] = scale[key] + 1);
+            el.setAttribute('scale', scale);
+            el.setAttribute('material', 'color', 'red');
+        });
+}
+});
+
+</script>
+<style>
+    button {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1000;
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+        font-size: 20px;
+        text-align: center;
+        padding-top: 20px;
+    }
+</style>
+</head>
+<body>
+<a-scene vr-mode-ui='enabled: false' arjs='sourceType: webcam; videoTexture: true; debugUIEnabled: false' renderer='antialias: true; alpha: true' gesture-detector>
+    <script>
+        AFRAME.registerComponent('clickhandler', {
+    
+    init: function() {
+        const el = this.el;
+    
+        el.addEventListener('touchend', function() {
+            const scale = el.getAttribute('scale');
+            Object.keys(scale).forEach((key) => scale[key] = scale[key] + 1);
+            el.setAttribute('scale', scale);
+            el.setAttribute('material', 'color', 'red');
+        });
+    }
+    });
+      </script>
+      
+    <a-camera 	gps-new-camera='gpsMinDistance: 20'></a-camera>
+    <!-- 51.044070, -114.055026 the cube in the middle of Platform -->
+    <!-- <a-entity event-set__click="_event: mousedown; color: blue"
+    event-set__tap="_event: mouseup; color: green" geometry="primitive: box;" id="clickable" position="0 0.5 0" material="color: #4CC3D9" gps-new-entity-place='latitude: 51.044070; longitude: -114.055026;' ></a-entity> -->
+    <a-entity id="box" geometry="primitive: box" material="color: red" clickhandler
+  gps-new-entity-place='latitude: 51.044070; longitude: -114.055026;'
+  scale="10 10 10" 
+  ></a-entity>
+  
+</a-scene>
+<!-- <button>click</button> -->
+
+<script>
+    const box = document.querySelector('#clickable');
+    box.addEventListener('click', function() {
+        const scale = box.getAttribute('scale');
+        Object.keys(scale).forEach((key) => scale[key] = scale[key] + 1);
+        box.setAttribute('scale', scale);
+        box.setAttribute('material', 'color', 'red');
+    });
+</script>
+</body>
+</html>
+
+<!-- 51.045270677840364, -114.05514627581498 cube in the library -->
+
+<!-- 51.04433586757606, -114.06309974355659 cube in the calgary tower -->
